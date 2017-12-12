@@ -8,6 +8,7 @@ import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
+import { HypnoblobsComponent } from '../hypnoblobs/hypnoblobs.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { HomeComponent } from './home.component';
     HomeRoutingModule
   ],
   declarations: [
-    HomeComponent
+    HomeComponent,
+    HypnoblobsComponent,
   ],
   providers: [
   ]

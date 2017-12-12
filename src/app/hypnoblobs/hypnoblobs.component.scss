@@ -1,0 +1,137 @@
+
+// $pi: 3.14159265;
+
+///////////////////////////////////////////////////////////
+// Plain SASS Trigonometry Algorithm in Taylor Expansion //
+//                                                       //
+// Based on                                              //
+//      http://japborst.net/posts/sass-sines-and-cosines //
+///////////////////////////////////////////////////////////
+
+$pi: 3.14159265359;
+$_precision: 10;
+
+@function pow($base, $exp) {
+  $value: $base;
+  @if $exp > 1 {
+    @for $i from 2 through $exp {
+      $value: $value * $base;
+    }
+  }
+  @if $exp < 1{
+    @for $i from 0 through -$exp {
+      $value: $value / $base;
+    }
+  }
+  @return $value;
+}
+
+@function fact($num) {
+  $fact: 1;
+  @if $num > 0{
+    @for $i from 1 through $num {
+      $fact: $fact * $i;
+    }
+  }
+  @return $fact;
+}
+
+@function _to_unitless_rad($angle) {
+  @if unit($angle) == "deg" {
+    $angle: $angle / 180deg * $pi;
+  }
+  @if unit($angle) == "rad" {
+    $angle: $angle / 1rad;
+  }
+  @return $angle;
+}
+
+@function sin($angle){
+  $a: _to_unitless_rad($angle);
+  $sin: $a;
+  @for $n from 1 through $_precision {
+    $sin: $sin + (pow(-1, $n) / fact(2 * $n + 1) ) * pow($a, (2 * $n + 1));
+  }
+  @return $sin;
+}
+
+@function cos($angle){
+  $a: _to_unitless_rad($angle);
+  $cos: 1;
+  @for $n from 1 through $_precision {
+    $cos: $cos + ( pow(-1,$n) / fact(2*$n) ) * pow($a,2*$n);
+  }
+  @return $cos;
+}
+
+@function tan($angle){
+  @return sin($angle) / cos($angle);
+}
+
+@function hypnoblob-animation-name($iBlob) {
+  @return "hypnoblob-#{$iBlob}-animation";
+}
+
+@mixin hypnoblobs($blob-count: 3, $slice-increment: 1, $spin-radius: 128px, $blob-radius: 12px) {
+
+  $blob-size: $blob-radius * 2;
+  $total-radius: $spin-radius + $blob-radius + 1;
+  $total-size: $total-radius * 2;
+
+  $initial-angle: $pi / 2;
+
+  @for $iBlob from 0 to $blob-count {
+    @keyframes #{hypnoblob-animation-name($iBlob)} {
+      @for $k from 0 through $blob-count {
+        $slice: ($iBlob + ($k * $slice-increment)) % $blob-count;
+        $angle: $slice * 2 * $pi / $blob-count + $initial-angle;
+        $animation-percent: ($k / $blob-count) * 100%;
+
+        #{$animation-percent} {
+          margin-left: $spin-radius + $spin-radius*cos($angle);
+          margin-top: $spin-radius - $spin-radius*sin($angle); // +1?
+        }
+      }
+    }
+
+    .hypnoblob-case:nth-of-type(#{$iBlob+1}) > .hypnoblob {
+      animation-name: #{hypnoblob-animation-name($iBlob)};
+    }
+  }
+
+  z-index: 100;
+  width: $total-size;
+  height: $total-size;
+  border-radius: $total-radius;
+  display: block;
+  margin: auto;
+
+  .hypnoblob-case {
+    position: absolute;
+    width: $total-size;
+    height: $total-size;
+  }
+
+  .hypnoblob {
+    $color: #0bb;
+
+    position: relative;
+    background-color: #070007;
+    border-radius: $blob-radius;
+    width: $blob-size;
+    height: $blob-size;
+    animation-duration: #{$blob-count * 2}s;
+    animation-iteration-count: infinite;
+    box-shadow: 0 0 0.5*$blob-radius 0.5*$blob-radius $color;
+  }
+}
+
+
+.hypnoblobs {
+  @include hypnoblobs(
+    $blob-count: 7,
+    $slice-increment: 2,
+    $spin-radius: 256px,
+    $blob-radius: 12px
+  );
+}
