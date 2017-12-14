@@ -1,13 +1,10 @@
-
 @import "src/style-helpers/math";
-
 
 @function hypnoblob-animation-name($iBlob) {
   @return "hypnoblob-#{$iBlob}-animation";
 }
 
 @mixin hypnoblobs($blob-count: 3, $slice-increment: 1, $spin-radius: 128px, $blob-radius: 12px) {
-
   $blob-size: $blob-radius * 2;
   $total-radius: $spin-radius + $blob-radius + 1;
   $total-size: $total-radius * 2;
@@ -28,7 +25,7 @@
       }
     }
 
-    .hypnoblob-case:nth-of-type(#{$iBlob+1}) > .hypnoblob {
+    .hypnoblob-case:nth-of-type(#{$iBlob + 1}) > .hypnoblob {
       animation-name: #{hypnoblob-animation-name($iBlob)};
     }
   }
@@ -59,7 +56,6 @@
     box-shadow: 0 0 0.5*$blob-radius 0.5*$blob-radius $color;
   }
 }
-
 
 .hypnoblobs {
   @include hypnoblobs(

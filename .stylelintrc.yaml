@@ -37,6 +37,7 @@ rules:
   - vw
   - vh
   - deg
+  - rad
   - s
   max-empty-lines: 2
   max-line-length: 120
