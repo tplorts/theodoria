@@ -6,6 +6,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material.module';
 import { AboutRoutingModule } from './about-routing.module';
 import { AboutComponent } from './about.component';
+import { HypnoblobsComponent } from '../hypnoblobs/hypnoblobs.component';
+
 
 @NgModule({
   imports: [
@@ -16,7 +18,8 @@ import { AboutComponent } from './about.component';
     AboutRoutingModule
   ],
   declarations: [
-    AboutComponent
+    AboutComponent,
+    HypnoblobsComponent,
   ]
 })
 export class AboutModule { }

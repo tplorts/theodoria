@@ -1,6 +1,12 @@
 <div class="container">
   <mat-card>
     <p>This website is under construction.  Please return soon!</p>
-    <app-hypnoblobs></app-hypnoblobs>
+    
+    <p>In the meantime, please take a look at some of the other things I am working on:</p>
+    <ul>
+      <li *ngFor="let project of projects">
+        <a href="{{ project.url }}" target="_blank">{{ project.name }}</a>
+      </li>
+    </ul>
   </mat-card>
 </div>

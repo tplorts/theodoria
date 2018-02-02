@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { range } from 'lodash';
 
+const x = 3;
 
 @Component({
   selector: 'app-hypnoblobs',
   templateUrl: './hypnoblobs.component.html',
-  styleUrls: ['./hypnoblobs.component.scss']
+  styleUrls: ['./hypnoblobs.component.scss'],
+  styles: [
+    `.class-${x}: {
+      border: 1px;
+    }`
+  ],
 })
 export class HypnoblobsComponent implements OnInit {
   private _blobCount = 7;
